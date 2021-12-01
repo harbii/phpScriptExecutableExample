@@ -15,8 +15,8 @@
      *     'key'      => (string) short name of variable.
      *     'name'     => (string) name of variable.
      *     'info'     => (string) informations of variable.
-     *     'optional' => (string) if variable is optional.
-     *     'default'  => (string) default of variable value.
+     *     'optional' => (boolen) if variable is optional.
+     *     'default'  => (mixed) default of variable value.
      *  ]
      *  @example [ 'key' => 'P' , 'name' => 'Path' , 'info' => 'path' , 'optional' => true , 'default' => $_SERVER[ 'PWD' ] ]
      */
@@ -32,7 +32,7 @@
 
     foreach( $args as $arg ) $argements[ $arg[ 'name' ] ] = array_merge( $arg , [ 'value' => $options[ $arg[ 'name' ] ] ?? $options[ $arg[ 'key' ] ] ?? $arg[ 'default' ] ] ) ;
 
-    if( ! $help[ 'value' ] ) exit( print_r( [
+    if( ! $argements [ 'Help' ] [ 'value' ] ) exit( print_r( [
         'argv'      => $argv                             ,
         'argements' => $argements                        ,
         'path'      => $argements [ 'Path' ] [ 'value' ] ,
