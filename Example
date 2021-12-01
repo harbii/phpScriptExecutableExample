@@ -1,0 +1,43 @@
+#!/usr/bin/php
+<?php
+
+    /** 
+     *  set new Global variables in app of application
+     *  @var Array $args of assignment arguments
+     *  @var Array $options arguments will return from getopt funcitone
+     *  @var Array $argements will use in application
+     */
+    Global $args , $options , $argements ;
+
+    /** 
+     *  $args is array will set to make variables from commend line string
+     *  @param args = [
+     *     'key'      => (string) short name of variable.
+     *     'name'     => (string) name of variable.
+     *     'info'     => (string) informations of variable.
+     *     'optional' => (string) if variable is optional.
+     *     'default'  => (string) default of variable value.
+     *  ]
+     *  @example [ 'key' => 'P' , 'name' => 'Path' , 'info' => 'path' , 'optional' => true , 'default' => $_SERVER[ 'PWD' ] ]
+     */
+    $args = [
+        [ 'key' => 'P' , 'name' => 'Path' , 'info' => 'path' , 'optional' => true  , 'default' => $_SERVER[ 'PWD' ] ] ,
+        [ 'key' => 'h' , 'name' => 'Help' , 'info' => 'help' , 'optional' => false , 'default' => true              ] ,
+    ] ;
+
+    $options   = getopt(
+        implode   ( null , array_map( fn( $arg ) => $arg[ 'key' ] . ( $arg[ 'optional' ] ? ':' : '::' ) , $args ) ) . 'abc' ,
+        array_map ( fn( $arg ) => $arg[ 'name' ] . ( $arg[ 'optional' ] ? ':' : '::' ) , $args )
+    ) ;
+
+    foreach( $args as $arg ) $argements[ $arg[ 'name' ] ] = array_merge( $arg , [ 'value' => $options[ $arg[ 'name' ] ] ?? $options[ $arg[ 'key' ] ] ?? $arg[ 'default' ] ] ) ;
+
+    if( ! $help[ 'value' ] ) exit( print_r( [
+        'argv'      => $argv                             ,
+        'argements' => $argements                        ,
+        'path'      => $argements [ 'Path' ] [ 'value' ] ,
+    ] ) );
+
+    // code to do something by bash
+
+?>
